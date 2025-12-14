@@ -1,0 +1,48 @@
+@if (state=='list') {
+<button (click)="add()" class="primary">افزودن</button>
+<table>
+    <thead>
+        <tr>
+            <th> نام</th>
+            <th> نام خانوادگی</th>
+            <th> شماره تماس</th>
+            <th> تاریخ عضویت</th>
+            
+        </tr>
+    </thead>
+    <tbody>
+        @for (item of data; track $index) {
+        <tr>
+            <td> {{item.name}} </td>
+            <td> {{item.lastname}} </td>
+            <td> {{item.phone}} </td>
+            <td> {{item.membershipdate}}</td>
+            
+
+            <button class="primary">ویرایش</button>
+            <button class="primary">حذف</button>
+        </tr>
+        }
+    </tbody>
+</table>
+}
+@else {
+<form (ngSubmit)="save()">
+    <div>
+        <input [(ngModel)]="item.name" id="name" name="name" type="text" placeholder="نام">
+    </div>
+    <div>
+        <input [(ngModel)]="item.lastname" id="lastname" name="lastname" type="text" placeholder="نام خانوادگی">
+    </div>
+    <div>
+        <input [(ngModel)]="item.phone" id="phone" name="phone" type="number" placeholder="شماره تماس">
+    </div>
+    <div>
+        <input [(ngModel)]="item.membershipdate" id="membershipdate" name="membershipdate" type="number" placeholder="تاریخ عضویت">
+    </div>
+    <div>
+        <button class="primary" type="submit">تایید</button>
+        <button (click)="cansel()" class="primary" type="button">انصراف</button>
+    </div>
+</form>
+}
