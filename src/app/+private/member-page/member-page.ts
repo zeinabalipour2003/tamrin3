@@ -1,4 +1,6 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
+import { Data } from '@angular/router';
+import { MemberService } from './member-service';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -7,42 +9,39 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './member-page.html',
   styleUrl: './member-page.scss',
 })
-export class MemberPage {
-  memberService: any;
+export class MemberPage implements OnInit {
 save() {
- this.memberService.add(this.item)
- this.dataRefresh();
- this.state='list';
+ this.MemberService.add(this.item);
+  this.dataRefresh();
+  this.state='list';
+
 }
   ngOnInit(): void {
     this.dataRefresh();
   }
-  data:memberItem[]=[];
-  item:memberItem={
+  data: MemberItem[] = [];
+  item:MemberItem={
+    id:0,
     name:'',
-    lastname:'',
-    phone:0,
-    membershipdate:0,
+    membershipdate:'',
+    validityperiod:'', 
   };
-  memberService=inject(this.memberService);
+  
+  MemberService=inject(MemberService);
   state:string='list';
   dataRefresh(){
-    this.data=this.memberService.list();
+    this.data=this.MemberService.list();
   }
   add() {
     this.state='add';
-   
   }
-  cansel(){
-    this.state='list';
-  }
+cansel(){
+  this.state='list';
 }
-export interface memberItem {
-  neme: string;
-  lastname: string;
-  phone: number;
-  membershipdate: number;
-
-} 
-
-
+}
+export interface MemberItem {
+  id: number;
+  name: string;
+  membershipdate: string;
+  validityperiod: string;
+}

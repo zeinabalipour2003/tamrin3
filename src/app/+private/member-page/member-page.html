@@ -3,42 +3,42 @@
 <table>
     <thead>
         <tr>
-            <th> نام</th>
-            <th> نام خانوادگی</th>
-            <th> شماره تماس</th>
-            <th> تاریخ عضویت</th>
-            
+            <th>کد ملی</th>
+            <th>نام و نام خانوادگی</th>
+            <th>تاریخ عضویت</th>
+            <th>مدت اعتبار</th>
         </tr>
     </thead>
     <tbody>
         @for (item of data; track $index) {
         <tr>
-            <td> {{item.name}} </td>
-            <td> {{item.lastname}} </td>
-            <td> {{item.phone}} </td>
-            <td> {{item.membershipdate}}</td>
-            
-
-            <button class="primary">ویرایش</button>
-            <button class="primary">حذف</button>
+            <td>{{item.id}}</td>
+            <td>{{item.name}}</td>
+            <td>{{item.membershipdate}}</td>
+            <td>{{item.validityperiod}}</td>
+            <td>
+                <button class="primary">ویرایش</button>
+                <button class="primary">حذف</button>
+            </td>
         </tr>
         }
+
     </tbody>
 </table>
 }
-@else {
+@else{
 <form (ngSubmit)="save()">
     <div>
-        <input [(ngModel)]="item.name" id="name" name="name" type="text" placeholder="نام">
+        <input [(ngModel)]="item.id" id="id" name="id" type="number" placeholder="کد ملی">
     </div>
     <div>
-        <input [(ngModel)]="item.lastname" id="lastname" name="lastname" type="text" placeholder="نام خانوادگی">
+        <input  [(ngModel)]="item.name" id="name" name="name" type="text" placeholder="نام و نام خانوادگی">
     </div>
     <div>
-        <input [(ngModel)]="item.phone" id="phone" name="phone" type="number" placeholder="شماره تماس">
+        <input  [(ngModel)]="item.membershipdate" id="membershipdate" name="membershipdate" type="text" placeholder="تاریخ عضویت">
     </div>
     <div>
-        <input [(ngModel)]="item.membershipdate" id="membershipdate" name="membershipdate" type="number" placeholder="تاریخ عضویت">
+        <input  [(ngModel)]="item.validityperiod" id="validityperiod" name="validityperiod" type="text" placeholder="مدت اعتبار">
     </div>
     <div>
         <button class="primary" type="submit">تایید</button>

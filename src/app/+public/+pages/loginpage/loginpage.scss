@@ -5,7 +5,6 @@
   min-height: 100vh;
   background-color: #cffbfe;
   padding: 20px;
-  font-family: Tahoma, Arial, sans-serif;
   direction: rtl;
 }
 
@@ -17,9 +16,10 @@
   width: 100%;
   max-width: 380px;
   box-sizing: border-box;
+
 }
 
-.login form > div {
+.login form>div {
   margin-bottom: 20px;
 }
 
@@ -49,8 +49,22 @@
 }
 
 .login input[type="checkbox"] {
+  margin-top: 0;
   margin-left: 8px;
+  /* فاصله از لیبل */
   transform: scale(1.1);
+  vertical-align: middle;
+}
+
+.login input[type="checkbox"]+label {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0;
+  font-weight: 500;
+  color: #4a5568;
+  font-size: 14px;
+  cursor: pointer;
+  user-select: none;
 }
 
 .login button {
@@ -63,7 +77,6 @@
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;
-  transition: background-color 0.2s;
 }
 
 .login button:hover:not(:disabled) {
@@ -76,7 +89,7 @@
 }
 
 /* پیام خطا یا موفقیت */
-.login form > div:last-child {
+.login form>div:last-child {
   margin-top: 10px;
   text-align: center;
   color: #d32f2f;
