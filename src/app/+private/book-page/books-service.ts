@@ -11,10 +11,23 @@ export class BooksService {
     { id: 3, titel: 'غرور و تعصب', writer: 'جین آستن', publisher: 'فانوس', price: 280000 },
     { id: 4, titel: 'قورباغه ات را قورت بده', writer: 'برایان ترسی', publisher: 'فانوس', price: 200000 },
   ];
-  list(){
+  list() {
     return [...this.data];
   }
-  add(item:BookItem){
+  add(item: BookItem) {
     this.data.push(item);
   }
-}
+  edit(item: BookItem) {
+    const index = this.data.findIndex(b => b.id == item.id);
+    if(index!=-1){
+      this.data[index].titel=item.titel;
+      this.data[index].writer=item.writer;
+      this.data[index].publisher=item.publisher;
+      this.data[index].price=item.price;
+    }
+  }
+  remove(item: BookItem) {
+      this.data=this.data.filter(b=>b.id!=item.id);
+    }
+  }
+

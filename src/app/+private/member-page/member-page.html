@@ -19,8 +19,8 @@
             <td>{{item.membershipdate}}</td>
             <td>{{item.validityperiod}}</td>
             <td>
-                <button class="primary">ویرایش</button>
-                <button class="primary">حذف</button>
+                <button (click)="edit(item)" class="primary">ویرایش</button>
+                <button (click)="remove(item)" class="primary">حذف</button>
             </td>
         </tr>
         }
@@ -29,18 +29,27 @@
 </table>
 }
 @else{
+    @if (state=='remove') {
+<div class="alert">
+    آیا از حذف اطمینان دارید؟
+</div>
+}
 <form (ngSubmit)="save()">
     <div>
-        <input [(ngModel)]="item.id" id="id" name="id" type="number" placeholder="کد ملی">
+        <input [disabled]="state=='edit' || state=='remove'" [class.ghofl]="state=='edit'" [(ngModel)]="item.id" id="id"
+            name="id" type="number" placeholder="کد ملی">
     </div>
     <div>
-        <input  [(ngModel)]="item.name" id="name" name="name" type="text" placeholder="نام و نام خانوادگی">
+        <input [disabled]="state=='remove'" [(ngModel)]="item.name" id="name" name="name" type="text"
+            placeholder="نام و نام خانوادگی">
     </div>
     <div>
-        <input  [(ngModel)]="item.membershipdate" id="membershipdate" name="membershipdate" type="text" placeholder="تاریخ عضویت">
+        <input [disabled]="state=='remove'" [(ngModel)]="item.membershipdate" id="membershipdate" name="membershipdate"
+            type="text" placeholder="تاریخ عضویت">
     </div>
     <div>
-        <input  [(ngModel)]="item.validityperiod" id="validityperiod" name="validityperiod" type="text" placeholder="مدت اعتبار">
+        <input [disabled]="state=='remove'" [(ngModel)]="item.validityperiod" id="validityperiod" name="validityperiod"
+            type="text" placeholder="مدت اعتبار">
     </div>
     <div>
         <button class="primary" type="submit">تایید</button>

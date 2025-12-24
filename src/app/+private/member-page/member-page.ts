@@ -10,34 +10,49 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './member-page.scss',
 })
 export class MemberPage implements OnInit {
-save() {
- this.MemberService.add(this.item);
-  this.dataRefresh();
-  this.state='list';
-
-}
+  save() {
+    if(this.state == 'add'){
+      this.MemberService.add(this.item);
+    }
+else if (this.state == 'edit') {
+      this.MemberService.edit(this.item);
+    }
+    else if (this.state == 'remove') {
+      this.MemberService.remove(this.item);
+    }
+    this.dataRefresh();
+    this.state = 'list';
+  }
   ngOnInit(): void {
     this.dataRefresh();
   }
   data: MemberItem[] = [];
-  item:MemberItem={
-    id:0,
-    name:'',
-    membershipdate:'',
-    validityperiod:'', 
+  item: MemberItem = {
+    id: 0,
+    name: '',
+    membershipdate: '',
+    validityperiod: '',
   };
-  
-  MemberService=inject(MemberService);
-  state:string='list';
-  dataRefresh(){
-    this.data=this.MemberService.list();
+
+  MemberService = inject(MemberService);
+  state: string = 'list';
+  dataRefresh() {
+    this.data = this.MemberService.list();
   }
   add() {
-    this.state='add';
+    this.state = 'add';
   }
-cansel(){
-  this.state='list';
-}
+  edit(member: MemberItem) {
+    this.item = { ...member };
+    this.state = 'edit';
+  }
+  remove(member: MemberItem) {
+    this.item = { ...member };
+    this.state = 'remove';
+  }
+  cansel() {
+    this.state = 'list';
+  }
 }
 export interface MemberItem {
   id: number;
@@ -45,3 +60,4 @@ export interface MemberItem {
   membershipdate: string;
   validityperiod: string;
 }
+
