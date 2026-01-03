@@ -1,41 +1,14 @@
-@if (state=='list') {
-<button (click)="add()" class="primary">افزودن</button>
-<table>
-    <thead>
-        <tr>
-            <th>کد ملی</th>
-            <th>نام و نام خانوادگی</th>
-            <th>تاریخ عضویت</th>
-            <th>مدت اعتبار</th>
-            <th></th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @for (item of data; track $index) {
-        <tr>
-            <td>{{item.id}}</td>
-            <td>{{item.name}}</td>
-            <td>{{item.membershipdate}}</td>
-            <td>{{item.validityperiod}}</td>
-            <td>
-                <button (click)="edit(item)" class="primary">ویرایش</button>
-                <button (click)="remove(item)" class="primary">حذف</button>
-            </td>
-        </tr>
-        }
-
-    </tbody>
-</table>
-}
-@else{
-    @if (state=='remove') {
-<div class="alert">
-    آیا از حذف اطمینان دارید؟
-</div>
-}
-<form (ngSubmit)="save()">
-    <div>
+<my-crud
+[mystate]="state"
+[columns]="memberColumns" 
+[mydata]="data"
+(onCancel)="cansel()" 
+(onAdd)="add()"
+(onEdit)="edit($event)"
+(onRemove)="remove($event)"
+(onsave)="save()"
+>
+ <div>
         <input [disabled]="state=='edit' || state=='remove'" [class.ghofl]="state=='edit'" [(ngModel)]="item.id" id="id"
             name="id" type="number" placeholder="کد ملی">
     </div>
@@ -52,8 +25,5 @@
             type="text" placeholder="مدت اعتبار">
     </div>
     <div>
-        <button class="primary" type="submit">تایید</button>
-        <button (click)="cansel()" class="primary" type="button">انصراف</button>
-    </div>
-</form>
-}
+</div>
+</my-crud>

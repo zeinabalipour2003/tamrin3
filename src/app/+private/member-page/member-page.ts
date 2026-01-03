@@ -2,62 +2,44 @@ import { Component, inject, OnInit } from '@angular/core';
 import { Data } from '@angular/router';
 import { MemberService } from './member-service';
 import { FormsModule } from '@angular/forms';
+import { Thing } from '../../+shared/+base/base-thing';
+import { BaseCrudPage } from '../../+shared/+base/base-crud-page';
+import { BaseCrudComponent, column } from "../../+shared/+base/base-crud-component/base-crud-component";
 
 @Component({
   selector: 'app-member-page',
-  imports: [FormsModule],
+  imports: [FormsModule, BaseCrudComponent],
   templateUrl: './member-page.html',
   styleUrl: './member-page.scss',
 })
-export class MemberPage implements OnInit {
-  save() {
-    if(this.state == 'add'){
-      this.MemberService.add(this.item);
-    }
-else if (this.state == 'edit') {
-      this.MemberService.edit(this.item);
-    }
-    else if (this.state == 'remove') {
-      this.MemberService.remove(this.item);
-    }
-    this.dataRefresh();
-    this.state = 'list';
-  }
+export class MemberPage extends BaseCrudPage<MemberItem> implements OnInit{
   ngOnInit(): void {
-    this.dataRefresh();
+    this.item={
+        name:'',
+        membershipdate:'',
+        validityperiod:''
+      }
+   this.dataRefresh();
   }
-  data: MemberItem[] = [];
-  item: MemberItem = {
-    id: 0,
-    name: '',
-    membershipdate: '',
-    validityperiod: '',
-  };
-
-  MemberService = inject(MemberService);
-  state: string = 'list';
-  dataRefresh() {
-    this.data = this.MemberService.list();
-  }
-  add() {
-    this.state = 'add';
-  }
-  edit(member: MemberItem) {
-    this.item = { ...member };
-    this.state = 'edit';
-  }
-  remove(member: MemberItem) {
-    this.item = { ...member };
-    this.state = 'remove';
-  }
-  cansel() {
-    this.state = 'list';
-  }
+    override setService=inject(MemberService);
+    override addPrepair(): void {
+      this.item={
+        name:'',
+        membershipdate:'',
+        validityperiod:''
+      }
+    }
+    memberColumns:column[]=[
+      {field:'id',titel:'کد ملی'},
+      {field:'name',titel:'نام و نام خانوادگی'},
+      {field:'membershipdate',titel:'تاریخ عضویت'},
+      {field:'validityperiod',titel:'مدت اعتبار'},
+    ]
 }
-export interface MemberItem {
-  id: number;
+export interface MemberItem extends Thing {
   name: string;
   membershipdate: string;
   validityperiod: string;
 }
+
 
